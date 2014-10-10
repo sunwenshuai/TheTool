@@ -22,7 +22,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import com.sws.thetool.conf.GlobalConfig;
 import com.sws.thetool.entity.WebImage;
 /*
- *  			   _ooOoo_ 
+				   _ooOoo_ 
                   o8888888o 
                   88" . "88 
                   (| -_- |) 
@@ -56,13 +56,13 @@ public class Engine {
 	private static String web;
 	private static int currentIndex=-1;
 	
-	private static HttpClient client=HttpClientBuilder.create().build();
 	private static final String IMGURL_REG = "<img[^>]*src=\"([^(>\")]*.jpg[^(>\")]*)?\"([^>]*)?>";
 	private static final String DESCURL_REG = "\"descUrl\":\"([^\"]*)\"";
 	private Engine(){}
 	
 	private static void imageFilter(){
 		try {
+			HttpClient client=HttpClientBuilder.create().build();
 			HttpGet method=new HttpGet(web);
 			HttpResponse response=client.execute(method);
 			if(response.getStatusLine().getStatusCode()==200){
@@ -141,7 +141,7 @@ public class Engine {
 			MainBoard.getInstance().getMonitor().append("已经是最后一张!");
 			return imagesCache.get(currentIndex);
 		}
-		MainBoard.getInstance().getMonitor().append("载入图片("+(currentIndex+1)+"/"+getTotalCount()+")");
+		MainBoard.getInstance().getMonitor().append("载入图片("+(currentIndex+2)+"/"+getTotalCount()+")");
 		//如果图片缓存中没有下一张图片  就去缓存
 		if(imagesCache.get(currentIndex+1)==null){
 			try {
@@ -177,7 +177,7 @@ public class Engine {
 			MainBoard.getInstance().getMonitor().append("已经是第一张!");
 			return imagesCache.get(currentIndex);
 		}
-		MainBoard.getInstance().getMonitor().append("载入图片("+(currentIndex+1)+"/"+getTotalCount()+")");
+		MainBoard.getInstance().getMonitor().append("载入图片("+(currentIndex+2)+"/"+getTotalCount()+")");
 		//如果图片缓存中没有上一张图片  就去缓存
 		if(imagesCache.get(currentIndex-1)==null){
 			try {
@@ -214,7 +214,7 @@ public class Engine {
 	public static void removeCurrentImage(){
 		WebImage image=new WebImage();image.setUrl(imgUrls.get(currentIndex));
 		if(selectedImgs.contains(image))
-			selectedImgs.remove(currentIndex-1);
+			selectedImgs.remove(currentIndex);
 		MainBoard.getInstance().getImgPanel().imgExist(false);
 	}
 	//得到图片数量

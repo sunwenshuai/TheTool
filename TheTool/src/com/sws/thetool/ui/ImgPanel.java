@@ -6,9 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -20,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import com.sws.thetool.conf.GlobalConfig;
 import com.sws.thetool.core.Engine;
@@ -43,11 +47,22 @@ public class ImgPanel extends JPanel implements ItemListener,ActionListener{
 	private JRadioButton defaultRd=new JRadioButton("默认宽度");
 	
 	
+	@SuppressWarnings("serial")
 	public ImgPanel(){
 		setLayout(null);
 		urlLb.setBounds(25,25,40,25);
 		add(urlLb);
 		urlTxt.setBounds(65,25,265,25);
+		urlTxt.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER&&!urlTxt.getText().trim().equals("")){
+					runBtn.doClick();
+					urlTxt.setFocusable(false);
+					addBtn.requestFocus();
+				}
+			}
+		});
 		add(urlTxt);
 		runBtn.addActionListener(this);
 		runBtn.setBounds(340,25,50,25);add(runBtn);
@@ -94,6 +109,20 @@ public class ImgPanel extends JPanel implements ItemListener,ActionListener{
 				addImage();
 			}
 		});
+		addBtn.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,0),"prev");
+		addBtn.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,0),"next");
+		addBtn.getActionMap().put("prev",new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Thread(new LoadImgRunnable(LoadImgRunnable.PREV)).start();
+			}
+		});
+		addBtn.getActionMap().put("next", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Thread(new LoadImgRunnable(LoadImgRunnable.NEXT)).start();
+			}
+		});
 		addBtn.setForeground(Color.RED);addBtn.setBounds(100,450,100,30);add(addBtn);
 		countLb.setBounds(210,450,140,30);add(countLb);
 	}
@@ -132,6 +161,9 @@ public class ImgPanel extends JPanel implements ItemListener,ActionListener{
 			addBtn.setText("从已添加中删除");
 		else
 			addBtn.setText("添加此图片");
+	}
+	public void addFocus(){
+		addBtn.requestFocus();
 	}
 	/**
 	 * 默认多选框监听方法
@@ -185,6 +217,7 @@ public class ImgPanel extends JPanel implements ItemListener,ActionListener{
 					}else if(type==PREV){
 						loadImg(Engine.prevImage());
 					}
+					addBtn.requestFocus();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

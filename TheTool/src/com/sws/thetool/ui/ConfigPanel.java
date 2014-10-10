@@ -58,6 +58,7 @@ public class ConfigPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainBoard.getInstance().getMonitor().clear();
+				MainBoard.getInstance().getImgPanel().addFocus();
 			}
 		});
 		clearBtn.setBounds(230,185,70,25);add(clearBtn);
