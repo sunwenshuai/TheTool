@@ -9,7 +9,7 @@ public class TheTool {
 		
 		MainBoard app=null;
 		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
+			UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
 			app=MainBoard.getInstance();
 			app.setVisible(true);
 		} catch (Exception e) {

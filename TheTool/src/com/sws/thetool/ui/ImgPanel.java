@@ -91,16 +91,19 @@ public class ImgPanel extends JPanel implements ItemListener,ActionListener{
 		addBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton btn=(JButton) e.getSource();
-				if(btn.getText().equals("添加此图片"))
-					Engine.addCurrentImage();
-				else if(btn.getText().equals("从已添加中删除"))
-					Engine.removeCurrentImage();
-				countLb.setText("已经添加了"+Engine.getSelectedCount()+"张图片");
+				addImage();
 			}
 		});
 		addBtn.setForeground(Color.RED);addBtn.setBounds(100,450,100,30);add(addBtn);
 		countLb.setBounds(210,450,140,30);add(countLb);
+	}
+	private void addImage(){
+		JButton btn=addBtn;
+		if(btn.getText().equals("添加此图片"))
+			Engine.addCurrentImage();
+		else if(btn.getText().equals("从已添加中删除"))
+			Engine.removeCurrentImage();
+		countLb.setText("已经添加了"+Engine.getSelectedCount()+"张图片");
 	}
 	//载入图片
 	private void loadImg(Icon icon){

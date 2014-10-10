@@ -214,7 +214,7 @@ public class Engine {
 	public static void removeCurrentImage(){
 		WebImage image=new WebImage();image.setUrl(imgUrls.get(currentIndex));
 		if(selectedImgs.contains(image))
-			selectedImgs.remove(currentIndex--);
+			selectedImgs.remove(currentIndex-1);
 		MainBoard.getInstance().getImgPanel().imgExist(false);
 	}
 	//得到图片数量
