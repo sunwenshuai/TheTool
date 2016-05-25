@@ -37,11 +37,9 @@ public class ConfigPanel extends JPanel {
 		jsp.setBounds(100,65,200,100);add(jsp);
 		checkViewBtn.setBounds(60,185,70,25);add(checkViewBtn);
 		exportBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+						public void actionPerformed(ActionEvent e) {
 				new Thread(new Runnable() {
-					@Override
-					public void run() {
+										public void run() {
 						synchronized (ConfigPanel.this) {
 							JFileChooser chooser=new JFileChooser();
 							if(chooser.showDialog(MainBoard.getInstance(),"导出HTML")==JFileChooser.APPROVE_OPTION){
@@ -55,8 +53,7 @@ public class ConfigPanel extends JPanel {
 		});
 		exportBtn.setBounds(140,185,80,25);add(exportBtn);
 		clearBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+						public void actionPerformed(ActionEvent e) {
 				MainBoard.getInstance().getMonitor().clear();
 				MainBoard.getInstance().getImgPanel().addFocus();
 			}
